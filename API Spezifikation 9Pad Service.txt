@@ -1,0 +1,16 @@
+// bei Swipen auf der mittleren Zeile
+{
+	"command":"move",
+	"cardIndex": 1,
+	"sourceColumn": 0
+}
+
+// bei Auswahl eines Content Items
+{
+	"command":"show",
+	"contentIndex": 8,
+	"target":{
+		"row":0,
+		"column":2
+	}
+}
