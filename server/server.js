@@ -2,7 +2,7 @@
 "use strict";
 
 // Optional. You will see this name in eg. 'ps' or 'top' command
-process.title = 'node-chat';
+process.title = '9pad node.js Server';
 
 // Port where we'll run the websocket server
 var webSocketsServerPort = 1337;
@@ -14,8 +14,6 @@ var http = require('http');
 /**
  * Global variables
  */
-// latest 100 messages
-var history = [ ];
 // list of currently connected clients (iPads)
 var clients = [ ];
 

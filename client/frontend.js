@@ -6,10 +6,10 @@ $(function () {
     var input = $('#input');
     var status = $('#status');
 
-    // my color assigned by the server
-    var myColor = false;
-    // my name sent to the server
-    var myName = false;
+	// 9pad configuration (TODO: maybe to be moved somewhere else)
+	var cardIndex = 4;
+	var maxCardIndex = 8;
+	var myColumnIndex = 1;
 
     // if user is running mozilla then use it's built-in WebSocket
     window.WebSocket = window.WebSocket || window.MozWebSocket;
@@ -22,104 +22,90 @@ $(function () {
         $('span').hide();
         return;
     }
+	
+	var getMoveCommand = function(cardIndex, sourceColumn){
+			var message = JSON.stringify({
+				"command": "move",
+				"cardIndex": cardIndex,
+				"sourceColumn": sourceColumn
+			});
+			return message;
+		};
 
+	var getShowCommand = function(contentIndex, targetRow, targetColumn){
+			var message = JSON.stringify({
+				"command":"show",
+				"contentIndex": contentIndex,
+				"target": {
+					"row": targetRow,
+					"column": targetColumn
+				}
+			});
+			return message;
+		};
+		
     // open connection
+	addMessage("Connecting to server...");
     var connection = new WebSocket('ws://54.246.102.191:1337');
 
     connection.onopen = function () {
-        // first we want users to enter their names
-        input.removeAttr('disabled');
-        status.text('Choose iPad position:');
-		
-		$('[name="cmd"]').click(function(){
-			connection.send($(this).val());
+		// BEGIN EXAMPLE 
+		addMessage("OK. Connected.");
+		$('button[value="left"]').click(function(){
+			cardIndex = cardIndex > 0 ? cardIndex - 1 : 0;
+			connection.send(getMoveCommand(cardIndex, myColumnIndex));
 		});
+		$('button[value="right"]').click(function(){
+			cardIndex = cardIndex < maxCardIndex - 1 ? cardIndex + 1 : maxCardIndex;
+			connection.send(getMoveCommand(cardIndex, myColumnIndex));
+		});
+		$('button[value="up"]').click(function(){
+			connection.send(getShowCommand(cardIndex * 2, 0, myColumnIndex));
+		});
+		$('button[value="down"]').click(function(){
+			connection.send(getShowCommand(cardIndex * 2, 2, myColumnIndex));
+		});
+		// END EXAMPLE 
     };
 
     connection.onerror = function (error) {
-        // just in there were some problems with conenction...
         content.html($('<p>', { text: 'Sorry, but there\'s some problem with your '
                                     + 'connection or the server is down.</p>' } ));
     };
 
-    // most important part - incoming messages
     connection.onmessage = function (message) {
-        // try to parse JSON message. Because we know that the server always returns
-        // JSON this should work without any problem but we should make sure that
-        // the massage is not chunked or otherwise damaged.
         try {
             var json = JSON.parse(message.data);
         } catch (e) {
-            console.log('This doesn\'t look like a valid JSON: ', message.data);
+            console.log('Invalid JSON string: ', message.data);
             return;
         }
 
-        // NOTE: if you're not sure about the JSON structure
-        // check the server source code above
-        if (json.type === 'color') { // first response from the server with user's color
-            myColor = json.data;
-            status.text(myName + ': ').css('color', myColor);
-            input.removeAttr('disabled').focus();
-            // from now user can start sending messages
-        } else if (json.type === 'history') { // entire message history
-            // insert every single message to the chat window
-            for (var i=0; i < json.data.length; i++) {
-				// TODO: to be replaced by status restore on each iPad
-                addMessage(json.data[i].author, json.data[i].text,
-                           json.data[i].color, new Date(json.data[i].time));
-            }
-        } else if (json.type === 'message') { // it's a single message
-            input.removeAttr('disabled'); // let the user write another message
-            addMessage(json.data.author, json.data.text,
-                       json.data.color, new Date(json.data.time));
+		// BEGIN EXAMPLE 
+        if (json.command === 'move') {
+			// Beispielcode:
+            addMessage("Received message: " + message.data);
+        } else if (json.command === 'show') {
+			// Beispielcode:
+            addMessage("Received message: " + message.data);
         } else {
-            console.log('Hmm..., I\'ve never seen JSON like this: ', json);
+            console.log('Unknown command in JSON document: ', json);
         }
+		// END EXAMPLE 
     };
 
-    /**
-     * Send mesage when user presses Enter key
-     */
-    input.keydown(function(e) {
-        if (e.keyCode === 13) {
-            var msg = $(this).val();
-            if (!msg) {
-                return;
-            }
-            // send the message as an ordinary text
-            connection.send(msg);
-            $(this).val('');
-            // disable the input field to make the user wait until server
-            // sends back response
-            input.attr('disabled', 'disabled');
-
-            // we know that the first message sent from a user their name
-            if (myName === false) {
-                myName = msg;
-            }
-        }
-    });
-
-    /**
-     * This method is optional. If the server wasn't able to respond to the
-     * in 3 seconds then show some error message to notify the user that
-     * something is wrong.
-     */
+	// Heatbeat check
     setInterval(function() {
         if (connection.readyState !== 1) {
-            status.text('Error');
-            input.attr('disabled', 'disabled').val('Unable to comminucate '
-                                                 + 'with the WebSocket server.');
+            addMessage('Error occured.');
         }
     }, 3000);
 
     /**
      * Add message to the chat window
+	 * Beispielcode
      */
-    function addMessage(author, message, color, dt) {
-        content.append('<p><span style="color:' + color + '">' + author + '</span> @ ' +
-             + (dt.getHours() < 10 ? '0' + dt.getHours() : dt.getHours()) + ':'
-             + (dt.getMinutes() < 10 ? '0' + dt.getMinutes() : dt.getMinutes())
-             + ': ' + message + '</p>');
+    function addMessage(message) {
+        content.append('<p>' + message + '</p>');
     }
 });
