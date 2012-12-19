@@ -23,12 +23,17 @@ Ext.define('9Pad.controller.CarouselController', {
     },
 
     connection: undefined,
-    myColumn: 0,
-    thisController: this,
     cardSwitchesToIgnore: [],
 
     init: function(){
         this.initWebSocket();
+    },
+
+    prepareCarouselView: function() {
+        var carouselView = this.getCarouselView(),
+            startIndex = this.getCarouselView().column;
+        this.cardSwitchesToIgnore.push(startIndex);
+        carouselView.setActiveItem(startIndex);
     },
 
     initWebSocket: function() {
@@ -58,12 +63,13 @@ Ext.define('9Pad.controller.CarouselController', {
     },
 
     sendCardSwitchBroadcast: function(newIndex) {
-        var moveBroadcast;
+        var moveBroadcast,
+            column = this.getCarouselView().column;
         console.log("Sending card switch broadcast to index: " + newIndex);
         moveBroadcast = {
             "command": "move",
             "cardIndex": newIndex,
-            "sourceColumn": this.myColumn
+            "sourceColumn": column
         };
         this.connection.send(JSON.stringify(moveBroadcast));
     },
@@ -75,7 +81,8 @@ Ext.define('9Pad.controller.CarouselController', {
     handleUpdateMessage: function(message) {
         var json,
             cardIndex,
-            sourceColumn;
+            sourceColumn,
+            column = this.getCarouselView().column;
         console.log("Got update message:");
         console.log(message);
         try {
@@ -88,7 +95,7 @@ Ext.define('9Pad.controller.CarouselController', {
         if (json.command === 'move') {
             cardIndex = json.cardIndex;
             sourceColumn = json.sourceColumn;
-            this.switchCard(cardIndex + (this.myColumn - sourceColumn));
+            this.switchCard(cardIndex + (column - sourceColumn));
         } else {
             console.log('Hmm..., I\'ve never seen JSON like this: ', json);
         }

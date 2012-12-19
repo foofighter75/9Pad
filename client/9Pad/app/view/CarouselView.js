@@ -20,11 +20,6 @@ Ext.define('9Pad.view.CarouselView', {
                     {
                         xtype: 'label',
                         html:'Item 1'
-                    },
-                    {
-                        xtype: 'button',
-                        text: 'Go to item 3',
-                        id: 'cardSwitchButton'
                     }
                 ]
             },
@@ -33,7 +28,15 @@ Ext.define('9Pad.view.CarouselView', {
                 style: 'background-color: #759E60'
             },
             {
-                html : 'Item 3'
+                html : 'Item 3',
+                style: 'background-color: #314347'
+            },
+            {
+                html : 'Item 4',
+                style: 'background-color: #4587E5'
+            },
+            {
+                html : 'Item 5'
             }
         ]
     }
