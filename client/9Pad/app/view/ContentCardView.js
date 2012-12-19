@@ -1,7 +1,8 @@
 Ext.define('9Pad.view.ContentCardView', {
     extend: 'Ext.Container',
     requires: [
-        'Ext.Label'
+        'Ext.Label',
+        'Ext.Img'
     ],
     xtype: 'contentcard',
     config: {
@@ -16,30 +17,33 @@ Ext.define('9Pad.view.ContentCardView', {
                 xtype : 'image',
                 src: '/resources/images/TestNote.png',
                 style: {
-                    margin: '15% 16px'
+                    margin: '16px 16px'
                 },
-                flex: 1
+                flex: 1,
+                draggable: true
             },
             {
                 xtype : 'image',
                 src: '/resources/images/TestNote.png',
                 style: {
-                    margin: '15% 16px'
+                    margin: '16px 16px'
                 },
-                flex: 1
+                flex: 1,
+                draggable: true
             },
             {
                 xtype : 'image',
                 src: '/resources/images/TestNote.png',
                 style: {
-                    margin: '15% 16px'
+                    margin: '16px 16px'
                 },
-                flex: 1
+                flex: 1,
+                draggable: true
             }
         ],
 
         style: {
-            padding: '32px'
+            padding: '16px'
         }
     }
 });

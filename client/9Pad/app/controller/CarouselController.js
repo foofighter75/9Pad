@@ -2,7 +2,10 @@ Ext.define('9Pad.controller.CarouselController', {
     extend: 'Ext.app.Controller',
 
     requires: [
-        '9Pad.view.CarouselView'
+        '9Pad.view.CarouselView',
+        'Ext.util.Draggable',
+        'Ext.ux.util.Draggable',
+        'Ext.ux.util.Droppable'
     ],
 
     config: {
@@ -29,11 +32,47 @@ Ext.define('9Pad.controller.CarouselController', {
         this.initWebSocket();
     },
 
-    prepareCarouselView: function() {
-        var carouselView = this.getCarouselView(),
-            startIndex = this.getCarouselView().column;
+    prepareCarouselViewWithColumn: function(column) {
+        var carouselView = this.getCarouselView();
+        carouselView.column = column;
+        this.moveCarouselToStartingPosition(carouselView);
+        this.initCarouselDragging(carouselView);
+    },
+
+    moveCarouselToStartingPosition: function(carouselView) {
+        console.log("Moving carousel to starting point:");
+        console.log(carouselView);
+        var startIndex = this.getCarouselView().column;
         this.cardSwitchesToIgnore.push(startIndex);
         carouselView.setActiveItem(startIndex);
+    },
+
+    initCarouselDragging: function(carouselView) {
+        var me = this;
+        Ext.Array.each(carouselView.getInnerItems(), function(contentCard) {
+            Ext.each(contentCard.getInnerItems(), function(item) {
+                if (Ext.isDefined(item.draggableBehavior)) {
+                    var draggable = item.draggableBehavior.getDraggable();
+
+                    draggable.group = 'base'; // Default group for droppable
+                    draggable.revert = true;
+
+                    draggable.setConstraint({
+                        min: { x: -Infinity, y: -Infinity },
+                        max: { x: Infinity, y: Infinity }
+                    });
+
+                    draggable.on({
+                        scope: me,
+                        dragstart: me.onDragStart,
+                        dragend: me.onDragEnd
+                    });
+                } else {
+                    console.log("Element not draggable:");
+                    console.log(item);
+                }
+            });
+        });
     },
 
     initWebSocket: function() {
@@ -54,7 +93,18 @@ Ext.define('9Pad.controller.CarouselController', {
         console.log("WebSocket open.");
     },
 
+    onDragStart: function() {
+        var me = this;
+
+        console.log('Start dragging', arguments);
+    },
+
+    onDragEnd: function() {
+        console.log('End of dragging', arguments);
+    },
+
     onCardSwitch: function(self, value, oldValue) {
+        console.log("onCardSwitch");
         var index = self.getItems().indexOf(value) - 1;
         if (this.cardSwitchesToIgnore.shift() !== index) {
             this.sendCardSwitchBroadcast(index);
@@ -98,6 +148,7 @@ Ext.define('9Pad.controller.CarouselController', {
     },
 
     switchCard: function(newIndex) {
+        console.log("Switching card to new index: " + newIndex);
         var carouselView = this.getCarouselView(),
             activeIndex = carouselView.getActiveIndex(),
             diff = newIndex - activeIndex,

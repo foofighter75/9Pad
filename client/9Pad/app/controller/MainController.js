@@ -52,13 +52,11 @@ Ext.define('9Pad.controller.MainController', {
             }),
             mainView = this.getMainView();
         button.on('tap', function() {
-            var carouselView = Ext.create('9Pad.view.CarouselView', {
-                column: column
-            });
+            var carouselView = Ext.create('9Pad.view.CarouselView');
             Ext.Viewport.add(carouselView);
             mainView.hide();
             carouselView.show();
-            self.getApplication().getController('CarouselController').prepareCarouselView();
+            self.getApplication().getController('CarouselController').prepareCarouselViewWithColumn(column);
         });
         return button;
     }
