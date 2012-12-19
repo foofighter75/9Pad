@@ -56,7 +56,6 @@ Ext.define('9Pad.controller.CarouselController', {
 
     onCardSwitch: function(self, value, oldValue) {
         var index = self.getItems().indexOf(value) - 1;
-        console.log("Switched to index: " + index);
         if (this.cardSwitchesToIgnore.shift() !== index) {
             this.sendCardSwitchBroadcast(index);
         }
@@ -65,7 +64,6 @@ Ext.define('9Pad.controller.CarouselController', {
     sendCardSwitchBroadcast: function(newIndex) {
         var moveBroadcast,
             column = this.getCarouselView().column;
-        console.log("Sending card switch broadcast to index: " + newIndex);
         moveBroadcast = {
             "command": "move",
             "cardIndex": newIndex,
@@ -83,8 +81,6 @@ Ext.define('9Pad.controller.CarouselController', {
             cardIndex,
             sourceColumn,
             column = this.getCarouselView().column;
-        console.log("Got update message:");
-        console.log(message);
         try {
             json = JSON.parse(message.data);
         } catch (e) {
@@ -102,7 +98,6 @@ Ext.define('9Pad.controller.CarouselController', {
     },
 
     switchCard: function(newIndex) {
-        console.log("Will switch to new index: " + newIndex);
         var carouselView = this.getCarouselView(),
             activeIndex = carouselView.getActiveIndex(),
             diff = newIndex - activeIndex,

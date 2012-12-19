@@ -1,7 +1,8 @@
 //<debug>
 Ext.Loader.setPath({
     'Ext': 'touch/src',
-    '9Pad': 'app'
+    '9Pad': 'app',
+    'Ext.ux': 'ux'
 });
 //</debug>
 
