@@ -1,11 +1,11 @@
-Ext.define('9Pad.view.Main', {
+Ext.define('9Pad.view.CarouselView', {
     extend: 'Ext.Carousel',
     requires: [
         'Ext.Label'
     ],
-    xtype: 'main',
+    xtype: 'overview',
     config: {
-        id: 'mainView',
+        id: 'carouselView',
         fullscreen: true,
 
         defaults: {

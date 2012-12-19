@@ -13,10 +13,12 @@ Ext.application({
     ],
 
     controllers: [
-        'MainController'
+        'CarouselController'
     ],
 
-    views: ['Main'],
+    views: [
+        'CarouselView'
+    ],
 
     icon: {
         '57': 'resources/icons/Icon.png',
@@ -41,7 +43,7 @@ Ext.application({
         Ext.fly('appLoadingIndicator').destroy();
 
         // Initialize the main view
-        Ext.Viewport.add(Ext.create('9Pad.view.Main'));
+        Ext.Viewport.add(Ext.create('9Pad.view.CarouselView'));
     },
 
     onUpdated: function() {

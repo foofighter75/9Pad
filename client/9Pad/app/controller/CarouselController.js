@@ -1,13 +1,13 @@
-Ext.define('9Pad.controller.MainController', {
+Ext.define('9Pad.controller.CarouselController', {
     extend: 'Ext.app.Controller',
 
     requires: [
-        '9Pad.view.Main'
+        '9Pad.view.CarouselView'
     ],
 
     config: {
         refs: {
-            mainView: '#mainView',
+            carouselView: '#carouselView',
             cardSwitchButton: '#cardSwitchButton'
         },
         control: {
@@ -16,7 +16,7 @@ Ext.define('9Pad.controller.MainController', {
                     this.sendCardSwitchBroadcast(2);
                 }
             },
-            mainView: {
+            carouselView: {
                 activeitemchange: 'onCardSwitch'
             }
         }
@@ -96,8 +96,8 @@ Ext.define('9Pad.controller.MainController', {
 
     switchCard: function(newIndex) {
         console.log("Will switch to new index: " + newIndex);
-        var mainView = this.getMainView(),
-            activeIndex = mainView.getActiveIndex(),
+        var carouselView = this.getCarouselView(),
+            activeIndex = carouselView.getActiveIndex(),
             diff = newIndex - activeIndex,
             jumpIndex;
         if (Math.abs(diff) > 0) {
@@ -108,13 +108,13 @@ Ext.define('9Pad.controller.MainController', {
                     jumpIndex = newIndex + 1;
                 }
                 this.cardSwitchesToIgnore.push(jumpIndex);
-                mainView.setActiveItem(jumpIndex);
+                carouselView.setActiveItem(jumpIndex);
             }
             this.cardSwitchesToIgnore.push(newIndex);
             if (diff > 0) {
-                mainView.next();
+                carouselView.next();
             } else {
-                mainView.previous();
+                carouselView.previous();
             }
         }
     }
