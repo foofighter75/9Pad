@@ -29,15 +29,6 @@ Ext.define('9Pad.controller.CarouselController', {
             carouselView: {
                 activeitemchange: 'onCardSwitch'
             }
-//            ,
-//
-//            lowerDropZone: {
-//                initialize: 'onLowerDropZoneInit'
-//            },
-//
-//            upperDropZone: {
-//                initialize: 'onUpperDropZoneInit'
-//            }
         }
     },
 
@@ -105,7 +96,7 @@ Ext.define('9Pad.controller.CarouselController', {
         // if user is running mozilla then use its built-in WebSocket
         window.WebSocket = window.WebSocket || window.MozWebSocket;
 
-        this.connection = new WebSocket('ws://54.246.102.191:1337');
+        this.connection = new WebSocket('ws://' + coordinationServerBaseIP + ':1337');
 
         this.connection.onerror = function (error) {
             alert('Sorry, but there\'s some problem with your connection or the server is down.');

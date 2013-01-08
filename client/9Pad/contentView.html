@@ -3,10 +3,11 @@
     <head>
         <title></title>
         <script src="jquery-1.8.3.js"></script>
+        <script src="coordinationServer.js"></script>
         <script type="text/javascript">
             <!--
             $(document).ready(function() {
-                var baseIP = '54.246.102.191',
+                var baseIP = coordinationServerBaseIP,
                     iframe = $('#contentView'),
                     columnParam = getQueryVariable("column"),
                     column = parseInt(columnParam),
