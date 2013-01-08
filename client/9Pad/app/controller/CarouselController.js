@@ -10,10 +10,17 @@ Ext.define('9Pad.controller.CarouselController', {
 
     config: {
         refs: {
+            overview: '#overview',
             carouselView: '#carouselView',
-            cardSwitchButton: '#cardSwitchButton'
+            cardSwitchButton: '#cardSwitchButton',
+            upperDropZone: '#upperDropZone',
+            lowerDropZone: '#lowerDropZone'
         },
         control: {
+            overview: {
+                initialize: 'onOverviewInit'
+            },
+
             cardSwitchButton: {
                 tap: function() {
                     this.sendCardSwitchBroadcast(2);
@@ -22,14 +29,31 @@ Ext.define('9Pad.controller.CarouselController', {
             carouselView: {
                 activeitemchange: 'onCardSwitch'
             }
+//            ,
+//
+//            lowerDropZone: {
+//                initialize: 'onLowerDropZoneInit'
+//            },
+//
+//            upperDropZone: {
+//                initialize: 'onUpperDropZoneInit'
+//            }
         }
     },
 
     connection: undefined,
     cardSwitchesToIgnore: [],
+    dragging: false,
 
     init: function(){
         this.initWebSocket();
+    },
+
+    onOverviewInit: function(overview) {
+        var me = this;
+        Ext.get('overview').dom.onmousemove = function(event) {
+            me.onMouseMovement(event);
+        }
     },
 
     prepareCarouselViewWithColumn: function(column) {
@@ -93,14 +117,67 @@ Ext.define('9Pad.controller.CarouselController', {
         console.log("WebSocket open.");
     },
 
-    onDragStart: function() {
-        var me = this;
-
-        console.log('Start dragging', arguments);
+    onMouseMovement: function(event) {
+        var x = event.clientX,
+            y = event.clientY,
+            windowHeight = (window.innerHeight > 0) ? window.innerHeight : screen.height,
+            windowWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+        if (this.dragging) {
+//            console.log("Dragged: ", this, event);
+        }
     },
 
-    onDragEnd: function() {
-        console.log('End of dragging', arguments);
+    onDragStart: function() {
+        var me = this;
+        console.log('Start dragging', arguments);
+        me.dragging = true;
+    },
+
+    onDragEnd: function(draggable, event) {
+        var me = this,
+            absDeltaX = event.absDeltaX,
+            x = event.pageX,
+            y = event.pageY,
+            windowHeight = (window.innerHeight > 0) ? window.innerHeight : screen.height,
+            windowWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+        if (absDeltaX < windowWidth / 3) {
+            if (y < windowHeight / 5) {
+                me.onDropUpper(draggable, x, y);
+            } else if (y > windowHeight * 4 / 5) {
+                me.onDropLower(draggable, x, y);
+            }
+        }
+        this.dragging = false;
+    },
+
+    onDropUpper: function(draggable, x, y) {
+        console.log("onDropUpper");
+        this.sendShowContentBroadcast(this.getContentIndexFromDraggable(draggable), 0);
+    },
+
+    onDropLower: function(draggable, x, y) {
+        console.log("onDropLower");
+        this.sendShowContentBroadcast(this.getContentIndexFromDraggable(draggable), 2);
+    },
+
+    getContentIndexFromDraggable: function(draggable) {
+        var draggedElement = draggable.getElement(),
+            contentId = draggedElement.id;
+        return parseInt(contentId.substring(8));
+    },
+
+    sendShowContentBroadcast: function(contentIndex, targetRow) {
+        var column = this.getCarouselView().column,
+            showBroadcast = {
+                "command": "show",
+                "contentIndex": contentIndex,
+                "target": {
+                    "row": targetRow,
+                    "column": column
+                }
+            };
+        console.log("Sending content view broadcast: ", contentIndex, showBroadcast);
+        this.connection.send(JSON.stringify(showBroadcast));
     },
 
     onCardSwitch: function(self, value, oldValue) {
@@ -134,7 +211,7 @@ Ext.define('9Pad.controller.CarouselController', {
         try {
             json = JSON.parse(message.data);
         } catch (e) {
-            console.log('This doesn\'t look like a valid JSON: ', message.data);
+            console.log('This doesn\'t look like valid JSON: ', message.data);
             return;
         }
 

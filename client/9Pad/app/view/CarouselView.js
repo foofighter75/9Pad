@@ -9,13 +9,15 @@ Ext.define('9Pad.view.CarouselView', {
     config: {
         layout: 'vbox',
         fullscreen: true,
+        id: 'overview',
         items: [
             {
                 xtype: 'container',
                 id: 'upperDropZone',
                 flex: 1,
                 style: {
-                    width: '100%'
+                    width: '100%',
+                    opacity: 0.3
                 }
             },
             {
@@ -33,23 +35,48 @@ Ext.define('9Pad.view.CarouselView', {
 
                 items: [
                     {
-                        xtype : 'contentcard'
+                        xtype : 'contentcard',
+                        contentImages: [
+                            '/resources/images/TestNote.png',
+                            '/resources/images/TestNote.png',
+                            '/resources/images/TestNote.png'
+                        ]
                     },
                     {
                         xtype : 'contentcard',
-                        style: 'background-color: #759E60'
+                        style: 'background-color: #759E60',
+                        contentImages: [
+                            '/resources/images/TestNote.png',
+                            '/resources/images/TestNote.png',
+                            '/resources/images/TestNote.png'
+                        ]
                     },
                     {
                         xtype : 'contentcard',
-                        style: 'background-color: #314347'
+                        style: 'background-color: #314347',
+                        contentImages: [
+                            '/resources/images/TestNote.png',
+                            '/resources/images/TestNote.png',
+                            '/resources/images/TestNote.png'
+                        ]
                     },
                     {
                         xtype : 'contentcard',
-                        style: 'background-color: #4587E5'
+                        style: 'background-color: #4587E5',
+                        contentImages: [
+                            '/resources/images/TestNote.png',
+                            '/resources/images/TestNote.png',
+                            '/resources/images/TestNote.png'
+                        ]
                     },
                     {
                         xtype : 'contentcard',
-                        style: 'background-color: #880000'
+                        style: 'background-color: #880000',
+                        contentImages: [
+                            '/resources/images/TestNote.png',
+                            '/resources/images/TestNote.png',
+                            '/resources/images/TestNote.png'
+                        ]
                     }
                 ]
             },

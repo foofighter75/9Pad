@@ -55,10 +55,30 @@ Ext.define('9Pad.controller.MainController', {
             var carouselView = Ext.create('9Pad.view.CarouselView');
             Ext.Viewport.add(carouselView);
             mainView.hide();
+            self.prepareContentCards(carouselView);
             carouselView.show();
             self.getApplication().getController('CarouselController').prepareCarouselViewWithColumn(column);
         });
         return button;
-    }
+    },
 
+    prepareContentCards: function(carouselView) {
+        var self = this,
+            carousel = carouselView.child('.carousel'),
+            cardIndex = 0;
+        console.log("Carousel: ", carousel);
+        console.log("Carousel items: ", carousel.getInnerItems());
+        Ext.Array.each(carousel.getInnerItems(), function(contentCard) {
+            var contentItems = contentCard.getInnerItems(),
+                contentImages = contentCard.config.contentImages,
+                i;
+            console.log("Processing content card: ", contentCard);
+            for (i = 0; i < contentItems.length; i++) {
+                console.log("Setting up item ", cardIndex, i, contentItems[i]);
+                contentItems[i].setSrc(contentImages[i]);
+                contentItems[i].element.id = "content_" + (cardIndex * 3 + i);
+            }
+            cardIndex++;
+        });
+    }
 });

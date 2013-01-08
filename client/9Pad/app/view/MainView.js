@@ -6,7 +6,7 @@ Ext.define('9Pad.view.MainView', {
     config: {
         id: 'mainView',
         fullscreen: true,
-        wdith: '100%',
+        width: '100%',
 
         layout: 'vbox',
 
