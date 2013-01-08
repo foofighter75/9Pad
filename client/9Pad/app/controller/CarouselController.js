@@ -219,8 +219,6 @@ Ext.define('9Pad.controller.CarouselController', {
             cardIndex = json.cardIndex;
             sourceColumn = json.sourceColumn;
             this.switchCard(cardIndex + (column - sourceColumn));
-        } else {
-            console.log('Hmm..., I\'ve never seen JSON like this: ', json);
         }
     },
 
