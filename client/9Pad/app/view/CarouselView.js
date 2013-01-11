@@ -37,45 +37,41 @@ Ext.define('9Pad.view.CarouselView', {
                     {
                         xtype : 'contentcard',
                         contentImages: [
-                            '/resources/images/TestNote.png',
-                            '/resources/images/TestNote.png',
-                            '/resources/images/TestNote.png'
+                            '/resources/images/Kacheln_iPad-Matrix.jpg',
+                            '/resources/images/Kacheln_iPad-Matrix2.jpg',
+                            '/resources/images/Kacheln_iPad-Matrix3.jpg'
                         ]
                     },
                     {
                         xtype : 'contentcard',
-                        style: 'background-color: #759E60',
                         contentImages: [
-                            '/resources/images/TestNote.png',
-                            '/resources/images/TestNote.png',
-                            '/resources/images/TestNote.png'
+                            '/resources/images/Kacheln_iPad-Matrix4.jpg',
+                            '/resources/images/Kacheln_iPad-Matrix5.jpg',
+                            '/resources/images/Kacheln_iPad-Matrix.jpg'
                         ]
                     },
                     {
                         xtype : 'contentcard',
-                        style: 'background-color: #314347',
                         contentImages: [
-                            '/resources/images/TestNote.png',
-                            '/resources/images/TestNote.png',
-                            '/resources/images/TestNote.png'
+                            '/resources/images/Kacheln_iPad-Matrix2.jpg',
+                            '/resources/images/Kacheln_iPad-Matrix3.jpg',
+                            '/resources/images/Kacheln_iPad-Matrix4.jpg'
                         ]
                     },
                     {
                         xtype : 'contentcard',
-                        style: 'background-color: #4587E5',
                         contentImages: [
-                            '/resources/images/TestNote.png',
-                            '/resources/images/TestNote.png',
-                            '/resources/images/TestNote.png'
+                            '/resources/images/Kacheln_iPad-Matrix5.jpg',
+                            '/resources/images/Kacheln_iPad-Matrix.jpg',
+                            '/resources/images/Kacheln_iPad-Matrix2.jpg'
                         ]
                     },
                     {
                         xtype : 'contentcard',
-                        style: 'background-color: #880000',
                         contentImages: [
-                            '/resources/images/TestNote.png',
-                            '/resources/images/TestNote.png',
-                            '/resources/images/TestNote.png'
+                            '/resources/images/Kacheln_iPad-Matrix3.jpg',
+                            '/resources/images/Kacheln_iPad-Matrix4.jpg',
+                            '/resources/images/Kacheln_iPad-Matrix5.jpg'
                         ]
                     }
                 ]

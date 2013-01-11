@@ -17,7 +17,12 @@ Ext.define('9Pad.view.ContentCardView', {
                 xtype : 'image',
                 src: '/resources/images/TestNote.png',
                 style: {
-                    margin: '16px 16px'
+                    'margin-left': '32px',
+                    'margin-right': '50px',
+                    'margin-top': '56px',
+                    'margin-bottom': '56px',
+                    width: '227px',
+                    height: '227px'
                 },
                 flex: 1,
                 draggable: true
@@ -26,7 +31,9 @@ Ext.define('9Pad.view.ContentCardView', {
                 xtype : 'image',
                 src: '/resources/images/TestNote.png',
                 style: {
-                    margin: '16px 16px'
+                    margin: '56px 50px',
+                    width: '227px',
+                    height: '227px'
                 },
                 flex: 1,
                 draggable: true
@@ -35,7 +42,12 @@ Ext.define('9Pad.view.ContentCardView', {
                 xtype : 'image',
                 src: '/resources/images/TestNote.png',
                 style: {
-                    margin: '16px 16px'
+                    'margin-left': '50px',
+                    'margin-right': '32px',
+                    'margin-top': '56px',
+                    'margin-bottom': '56px',
+                    width: '227px',
+                    height: '227px'
                 },
                 flex: 1,
                 draggable: true
