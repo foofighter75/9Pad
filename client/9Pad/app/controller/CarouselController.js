@@ -162,10 +162,24 @@ Ext.define('9Pad.controller.CarouselController', {
 
             }
             else {
-                $('#bubble').css({'visibility':'hidden'});
+                // $('#bubble').css({'visibility':'hidden'});
+                $('#bubble').animate({
+                    width: '0px',
+                    height: '0px',
+                    top: windowHeight / 2,
+                    opacity: 0,
+                    left: event.startX,
+                }, 800 );
             }
         } else {
-            $('#bubble').css({'visibility':'hidden'});
+            // $('#bubble').css({'visibility':'hidden'});
+            $('#bubble').animate({
+                width: '0px',
+                height: '0px',
+                top: windowHeight / 2,
+                opacity: 0,
+                left: event.startX,
+            }, 800 );
         }
 
 
