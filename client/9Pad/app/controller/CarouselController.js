@@ -117,7 +117,7 @@ Ext.define('9Pad.controller.CarouselController', {
             absDeltaY = Math.abs((windowHeight / 2) - y),
             opacity = 1 - (((dropZoneBorder - absDeltaY) / dropZoneBorder)),
             size = (opacity > 1) ? 227 : opacity * 227;
-            // console.log("height="+windowHeight+" x="+x+" y="+y+" absDeltaY="+absDeltaY+" opacity="+opacity+" dropZoneBorder="+dropZoneBorder);
+        // console.log("height="+windowHeight+" x="+x+" y="+y+" absDeltaY="+absDeltaY+" opacity="+opacity+" dropZoneBorder="+dropZoneBorder);
         if (this.dragging) {
             $('#bubble').css({'top':y-size/2,'left':x-size/2,'width':size,'height':size,'opacity':opacity});
 //            console.log("Dragged: ", this, event);
@@ -133,7 +133,7 @@ Ext.define('9Pad.controller.CarouselController', {
         $('#bubble').css({'width':227,'height':227,'top':y-114,'left':x-114,'visibility':'visible','opacity':0});
     },
 
-     onDragEnd: function(draggable, event) {
+    onDragEnd: function(draggable, event) {
         var me = this,
             absDeltaX = event.absDeltaX,
             x = event.pageX,
@@ -186,7 +186,7 @@ Ext.define('9Pad.controller.CarouselController', {
         this.dragging = false;
     },
 
-     onDropUpper: function(draggable, x, y) {
+    onDropUpper: function(draggable, x, y) {
         console.log("onDropUpper");
         this.sendShowContentBroadcast(this.getContentIndexFromDraggable(draggable), 0);
     },
