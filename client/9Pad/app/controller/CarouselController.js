@@ -114,11 +114,12 @@ Ext.define('9Pad.controller.CarouselController', {
             windowHeight = (window.innerHeight > 0) ? window.innerHeight : screen.height,
             windowWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width,
             dropZoneBorder = windowHeight / 2 - windowHeight / 5,
-            absDeltaY = Math.abs((windowHeight / 2) - y)
-            opacity = 1 - (((dropZoneBorder - absDeltaY) / dropZoneBorder));
+            absDeltaY = Math.abs((windowHeight / 2) - y),
+            opacity = 1 - (((dropZoneBorder - absDeltaY) / dropZoneBorder)),
+            size = opacity * 227;
             console.log("height="+windowHeight+" x="+x+" y="+y+" absDeltaY="+absDeltaY+" opacity="+opacity+" dropZoneBorder="+dropZoneBorder);
         if (this.dragging) {
-            $('#bubble').css({'top':y-114,'left':x-114,'opacity':opacity});
+            $('#bubble').css({'top':y-size/2,'left':x-size/2,'width':size,'height':size,'opacity':opacity});
 //            console.log("Dragged: ", this, event);
         }
     },
@@ -146,6 +147,7 @@ Ext.define('9Pad.controller.CarouselController', {
                     width: '0px',
                     height: '0px',
                     top: 0,
+                    opacity: 0,
                     left: x
                 }, 500 );
             } else if (y > windowHeight * 4 / 5) {
@@ -154,6 +156,7 @@ Ext.define('9Pad.controller.CarouselController', {
                     width: '0px',
                     height: '0px',
                     top: windowHeight,
+                    opacity: 0,
                     left: x
                 }, 500 );
 
