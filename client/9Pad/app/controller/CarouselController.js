@@ -132,7 +132,7 @@ Ext.define('9Pad.controller.CarouselController', {
         $('#bubble').css({'width':227,'height':227,'top':y-114,'left':x-114,'visibility':'visible','opacity':0});
     },
 
-    onDragEnd: function(draggable, event) {
+     onDragEnd: function(draggable, event) {
         var me = this,
             absDeltaX = event.absDeltaX,
             x = event.pageX,
@@ -169,7 +169,7 @@ Ext.define('9Pad.controller.CarouselController', {
         this.dragging = false;
     },
 
-    onDropUpper: function(draggable, x, y) {
+     onDropUpper: function(draggable, x, y) {
         console.log("onDropUpper");
         this.sendShowContentBroadcast(this.getContentIndexFromDraggable(draggable), 0);
     },

@@ -54,7 +54,7 @@ Ext.define('9Pad.view.CarouselView', {
                             '/resources/images/Kacheln iPad-Matrix2.jpg',
                             '/resources/images/Kacheln iPad-Matrix3.jpg'
                         ],
-                        backgroundImage: '/resources/images/TestNote.png'
+                        backgroundImage: 'myContentCard1'
                     },
                     {
                         xtype : 'contentcard',
@@ -63,7 +63,7 @@ Ext.define('9Pad.view.CarouselView', {
                             '/resources/images/Kacheln iPad-Matrix5.jpg',
                             '/resources/images/Kacheln iPad-Matrix6.jpg'
                         ],
-                        backgroundImage: '/resources/images/TestNote.png'
+                        backgroundImage: 'myContentCard2'
                     },
                     {
                         xtype : 'contentcard',
@@ -72,7 +72,7 @@ Ext.define('9Pad.view.CarouselView', {
                             '/resources/images/Kacheln iPad-Matrix8.jpg',
                             '/resources/images/Kacheln iPad-Matrix9.jpg'
                         ],
-                        backgroundImage: '/resources/images/TestNote.png'
+                        backgroundImage: 'myContentCard3'
                     },
                     {
                         xtype : 'contentcard',
@@ -81,7 +81,7 @@ Ext.define('9Pad.view.CarouselView', {
                             '/resources/images/Kacheln iPad-Matrix11.jpg',
                             '/resources/images/Kacheln iPad-Matrix12.jpg'
                         ],
-                        backgroundImage: '/resources/images/TestNote.png'
+                        backgroundImage: 'myContentCard4'
                     },
                     {
                         xtype : 'contentcard',
@@ -90,7 +90,7 @@ Ext.define('9Pad.view.CarouselView', {
                             '/resources/images/Kacheln iPad-Matrix14.jpg',
                             '/resources/images/Kacheln iPad-Matrix15.jpg'
                         ],
-                        backgroundImage: '/resources/images/TestNote.png'
+                        backgroundImage: 'myContentCard5'
                     },
                     {
                         xtype : 'contentcard',
@@ -99,7 +99,7 @@ Ext.define('9Pad.view.CarouselView', {
                             '/resources/images/Kacheln iPad-Matrix17.jpg',
                             '/resources/images/Kacheln iPad-Matrix18.jpg'
                         ],
-                        backgroundImage: '/resources/images/TestNote.png'
+                        backgroundImage: 'myContentCard6'
                     },
                     {
                         xtype : 'contentcard',
@@ -108,7 +108,7 @@ Ext.define('9Pad.view.CarouselView', {
                             '/resources/images/Kacheln iPad-Matrix20.jpg',
                             '/resources/images/Kacheln iPad-Matrix21.jpg'
                         ],
-                        backgroundImage: '/resources/images/TestNote.png'
+                        backgroundImage: 'myContentCard7'
                     },
                     {
                         xtype : 'contentcard',
@@ -117,7 +117,7 @@ Ext.define('9Pad.view.CarouselView', {
                             '/resources/images/Kacheln iPad-Matrix23.jpg',
                             '/resources/images/Kacheln iPad-Matrix24.jpg'
                         ],
-                        backgroundImage: '/resources/images/TestNote.png'
+                        backgroundImage: 'myContentCard8'
                     }
 
                 ]

@@ -55,6 +55,6 @@ Ext.define('9Pad.view.ContentCardView', {
         style: {
             padding: '16px'
         },
-        cls: 'myContentCard'
+        cls: 'myContentCard1'
     }
 });
