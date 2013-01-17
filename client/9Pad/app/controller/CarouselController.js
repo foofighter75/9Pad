@@ -116,7 +116,7 @@ Ext.define('9Pad.controller.CarouselController', {
             dropZoneBorder = windowHeight / 2 - windowHeight / 5,
             absDeltaY = Math.abs((windowHeight / 2) - y),
             opacity = 1 - (((dropZoneBorder - absDeltaY) / dropZoneBorder)),
-            size = opacity * 227;
+            size = (opacity > 1) ? 227 : opacity * 227;
             console.log("height="+windowHeight+" x="+x+" y="+y+" absDeltaY="+absDeltaY+" opacity="+opacity+" dropZoneBorder="+dropZoneBorder);
         if (this.dragging) {
             $('#bubble').css({'top':y-size/2,'left':x-size/2,'width':size,'height':size,'opacity':opacity});
