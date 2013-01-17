@@ -9,13 +9,11 @@ Ext.define('9Pad.view.ContentCardView', {
         defaults: {
             styleHtmlContent: true
         },
-
         layout: 'hbox',
-
         items: [
             {
                 xtype : 'image',
-                src: '/resources/images/TestNote.png',
+                src: '/resources/images/bubble_invisible.png',
                 style: {
                     'margin-left': '32px',
                     'margin-right': '50px',
@@ -29,7 +27,7 @@ Ext.define('9Pad.view.ContentCardView', {
             },
             {
                 xtype : 'image',
-                src: '/resources/images/TestNote.png',
+                src: '/resources/images/bubble_invisible.png',
                 style: {
                     margin: '56px 50px',
                     width: '227px',
@@ -40,7 +38,7 @@ Ext.define('9Pad.view.ContentCardView', {
             },
             {
                 xtype : 'image',
-                src: '/resources/images/TestNote.png',
+                src: '/resources/images/bubble_invisible.png',
                 style: {
                     'margin-left': '50px',
                     'margin-right': '32px',
@@ -56,6 +54,7 @@ Ext.define('9Pad.view.ContentCardView', {
 
         style: {
             padding: '16px'
-        }
+        },
+        cls: 'myContentCard'
     }
 });

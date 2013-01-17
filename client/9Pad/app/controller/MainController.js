@@ -74,9 +74,10 @@ Ext.define('9Pad.controller.MainController', {
                 contentImages = contentCard.config.contentImages,
                 i;
             console.log("Processing content card: ", contentCard);
+            contentCard.setStyle('background-image', contentCard.config.backgroundImage);
             for (i = 0; i < contentItems.length; i++) {
                 console.log("Setting up item ", cardIndex, i, contentItems[i]);
-                contentItems[i].setSrc(contentImages[i]);
+                // contentItems[i].setSrc(contentImages[i]);
                 contentItems[i].element.id = "content_" + (cardIndex * 3 + i);
             }
             cardIndex++;

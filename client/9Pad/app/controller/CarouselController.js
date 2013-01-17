@@ -112,16 +112,24 @@ Ext.define('9Pad.controller.CarouselController', {
         var x = event.clientX,
             y = event.clientY,
             windowHeight = (window.innerHeight > 0) ? window.innerHeight : screen.height,
-            windowWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+            windowWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width,
+            dropZoneBorder = windowHeight / 2 - windowHeight / 5,
+            absDeltaY = Math.abs((windowHeight / 2) - y)
+            opacity = 1 - (((dropZoneBorder - absDeltaY) / dropZoneBorder));
+            console.log("height="+windowHeight+" x="+x+" y="+y+" absDeltaY="+absDeltaY+" opacity="+opacity+" dropZoneBorder="+dropZoneBorder);
         if (this.dragging) {
+            $('#bubble').css({'top':y-114,'left':x-114,'opacity':opacity});
 //            console.log("Dragged: ", this, event);
         }
     },
 
-    onDragStart: function() {
-        var me = this;
+    onDragStart: function(draggable, event) {
+        var x = event.startX,
+            y = event.startY,
+            me = this;
         console.log('Start dragging', arguments);
         me.dragging = true;
+        $('#bubble').css({'width':227,'height':227,'top':y-114,'left':x-114,'visibility':'visible','opacity':0});
     },
 
     onDragEnd: function(draggable, event) {
@@ -134,10 +142,30 @@ Ext.define('9Pad.controller.CarouselController', {
         if (absDeltaX < windowWidth / 3) {
             if (y < windowHeight / 5) {
                 me.onDropUpper(draggable, x, y);
+                $('#bubble').animate({
+                    width: '0px',
+                    height: '0px',
+                    top: 0,
+                    left: x
+                }, 500 );
             } else if (y > windowHeight * 4 / 5) {
                 me.onDropLower(draggable, x, y);
+                $('#bubble').animate({
+                    width: '0px',
+                    height: '0px',
+                    top: windowHeight,
+                    left: x
+                }, 500 );
+
             }
+            else {
+                $('#bubble').css({'visibility':'hidden'});
+            }
+        } else {
+            $('#bubble').css({'visibility':'hidden'});
         }
+
+
         this.dragging = false;
     },
 
