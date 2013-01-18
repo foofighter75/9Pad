@@ -80,6 +80,7 @@ Ext.define('9Pad.controller.CarouselController', {
                     draggable.on({
                         scope: me,
                         dragstart: me.onDragStart,
+                        drag: me.onDrag,
                         dragend: me.onDragEnd
                     });
                 } else {
@@ -109,9 +110,11 @@ Ext.define('9Pad.controller.CarouselController', {
     },
 
     onMouseMovement: function(event) {
-        var x = event.clientX,
-            y = event.clientY,
-            windowHeight = (window.innerHeight > 0) ? window.innerHeight : screen.height,
+        return this.onTouchMovement(event.clientX, event.clientY);
+    },
+
+    onTouchMovement: function(x, y) {
+        var windowHeight = (window.innerHeight > 0) ? window.innerHeight : screen.height,
             windowWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width,
             dropZoneBorder = windowHeight / 2 - windowHeight / 5,
             absDeltaY = Math.abs((windowHeight / 2) - y),
@@ -120,7 +123,6 @@ Ext.define('9Pad.controller.CarouselController', {
         // console.log("height="+windowHeight+" x="+x+" y="+y+" absDeltaY="+absDeltaY+" opacity="+opacity+" dropZoneBorder="+dropZoneBorder);
         if (this.dragging) {
             $('#bubble').css({'top':y-size/2,'left':x-size/2,'width':size,'height':size,'opacity':opacity});
-//            console.log("Dragged: ", this, event);
         }
     },
 
@@ -131,6 +133,10 @@ Ext.define('9Pad.controller.CarouselController', {
         console.log('Start dragging', arguments);
         me.dragging = true;
         $('#bubble').css({'width':227,'height':227,'top':y-114,'left':x-114,'visibility':'visible','opacity':0});
+    },
+
+    onDrag: function(draggable, event, offsetX, offsetY) {
+        return this.onTouchMovement(event.pageX, event.pageY);
     },
 
     onDragEnd: function(draggable, event) {
@@ -168,7 +174,7 @@ Ext.define('9Pad.controller.CarouselController', {
                     height: '0px',
                     top: windowHeight / 2,
                     opacity: 0,
-                    left: event.startX,
+                    left: event.startX
                 }, 800 );
             }
         } else {
@@ -178,7 +184,7 @@ Ext.define('9Pad.controller.CarouselController', {
                 height: '0px',
                 top: windowHeight / 2,
                 opacity: 0,
-                left: event.startX,
+                left: event.startX
             }, 800 );
         }
 
@@ -187,12 +193,10 @@ Ext.define('9Pad.controller.CarouselController', {
     },
 
     onDropUpper: function(draggable, x, y) {
-        console.log("onDropUpper");
         this.sendShowContentBroadcast(this.getContentIndexFromDraggable(draggable), 0);
     },
 
     onDropLower: function(draggable, x, y) {
-        console.log("onDropLower");
         this.sendShowContentBroadcast(this.getContentIndexFromDraggable(draggable), 2);
     },
 
@@ -212,12 +216,11 @@ Ext.define('9Pad.controller.CarouselController', {
                     "column": column
                 }
             };
-        console.log("Sending content view broadcast: ", contentIndex, showBroadcast);
+//        console.log("Sending content view broadcast: ", contentIndex, showBroadcast);
         this.connection.send(JSON.stringify(showBroadcast));
     },
 
     onCardSwitch: function(self, value, oldValue) {
-        console.log("onCardSwitch");
         var index = self.getItems().indexOf(value) - 1;
         if (this.cardSwitchesToIgnore.shift() !== index) {
             this.sendCardSwitchBroadcast(index);
