@@ -40,7 +40,7 @@ Ext.define('9Pad.controller.MainController', {
         });
         button.on('tap', function() {
             console.log('Starting as content view in row ' + row + ', column ' + column);
-            window.open('/contentView.html?row=' + row + '&column=' + column, '_self');
+            window.open('contentView.html?row=' + row + '&column=' + column, '_self');
         });
         return button;
     },

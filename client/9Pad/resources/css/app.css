@@ -11139,33 +11139,33 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 .myContentCard1 {
-    background: url('/resources/images/page1.png') no-repeat center;
+    background: url('../images/page1.png') no-repeat center;
 }
 
 .myContentCard2 {
-    background: url('/resources/images/page2.png') no-repeat center;
+    background: url('../images/page2.png') no-repeat center;
 }
 
 .myContentCard3 {
-     background: url('/resources/images/page3.png') no-repeat center;
+     background: url('../images/page3.png') no-repeat center;
  }
 
 .myContentCard4 {
-     background: url('/resources/images/page4.png') no-repeat center;
+     background: url('../images/page4.png') no-repeat center;
  }
 
 .myContentCard5 {
-    background: url('/resources/images/page5.png') no-repeat center;
+    background: url('../images/page5.png') no-repeat center;
 }
 
 .myContentCard6 {
-     background: url('/resources/images/page6.png') no-repeat center;
+     background: url('../images/page6.png') no-repeat center;
  }
 
 .myContentCard7 {
-    background: url('/resources/images/page7.png') no-repeat center;
+    background: url('../images/page7.png') no-repeat center;
 }
 
 .myContentCard8 {
-    background: url('/resources/images/page8.png') no-repeat center;
+    background: url('../images/page8.png') no-repeat center;
 }
