@@ -12,7 +12,9 @@
                     columnParam = getQueryVariable("column"),
                     column = parseInt(columnParam),
                     rowParam = getQueryVariable("row"),
-                    row = parseInt(rowParam);
+                    row = parseInt(rowParam),
+                    connection,
+                    keepAliveTimer;
 
                 initIframe();
                 initWebSocket();
@@ -27,14 +29,17 @@
                     // if user is running mozilla then use its built-in WebSocket
                     window.WebSocket = window.WebSocket || window.MozWebSocket;
 
-                    this.connection = new WebSocket('ws://' + baseIP + ':1337');
+                    connection = new WebSocket('ws://' + baseIP + ':1337');
 
-                    this.connection.onerror = function (error) {
+                    connection.onerror = function (error) {
                         alert('Sorry, but there\'s some problem with your connection or the server is down.');
                     };
 
-                    this.connection.onmessage = function(message) {
+                    connection.onmessage = function(message) {
                         handleUpdateMessage(message);
+                        if (!keepAliveTimer) {
+                            sendKeepAlive();
+                        }
                     };
                     console.log("WebSocket open.");
                 }
@@ -71,6 +76,14 @@
                     console.log("Loading content for index ", contentIndex, " in row ", row, ", column ", column);
                     iframe.attr('src', '/static_content/' + contentIndex + '.html');
                     // iframe.attr('src', '/9padcontent/' + contentIndex + '.html');
+                }
+
+                function sendKeepAlive() {
+                    console.log('keepAlive');
+                    connection.send(JSON.stringify({
+                        "command": "keepAlive"
+                    }));
+                    keepAliveTimer = setTimeout(sendKeepAlive, 180000);
                 }
             });
             //-->

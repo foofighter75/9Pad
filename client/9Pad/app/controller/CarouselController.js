@@ -35,6 +35,7 @@ Ext.define('9Pad.controller.CarouselController', {
     connection: undefined,
     cardSwitchesToIgnore: [],
     dragging: false,
+    keepAliveTimer: undefined,
 
     init: function(){
         this.initWebSocket();
@@ -109,13 +110,21 @@ Ext.define('9Pad.controller.CarouselController', {
         console.log("WebSocket open.");
     },
 
+    sendKeepAlive: function(connection) {
+        var self = this;
+        console.log('keepAlive');
+        connection.send(JSON.stringify({
+            "command": "keepAlive"
+        }));
+        return setTimeout(function() {self.sendKeepAlive(connection);}, 180000);
+    },
+
     onMouseMovement: function(event) {
         return this.onTouchMovement(event.clientX, event.clientY);
     },
 
     onTouchMovement: function(x, y) {
         var windowHeight = (window.innerHeight > 0) ? window.innerHeight : screen.height,
-            windowWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width,
             dropZoneBorder = windowHeight / 2 - windowHeight / 5,
             absDeltaY = Math.abs((windowHeight / 2) - y),
             opacity = 1 - (((dropZoneBorder - absDeltaY) / dropZoneBorder)),
@@ -283,6 +292,9 @@ Ext.define('9Pad.controller.CarouselController', {
             } else {
                 carouselView.previous();
             }
+        }
+        if (!this.keepAliveTimer) {
+            this.keepAliveTimer = this.sendKeepAlive(this.connection);
         }
     }
 });
