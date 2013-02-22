@@ -2,8 +2,19 @@
 <html>
 <head>
     <title></title>
+    <script src="jquery-1.8.3.min.js"></script>
+    <script type="text/javascript">
+        <!--
+        $(document).ready(function() {
+            var img = $('#content');
+            img.load(function() {
+                img.fadeIn();
+            });
+        });
+        // -->
+    </script>
 </head>
 <body>
-    	<video src="journey_to_cloud_ipad.mp4" width="640" height="360" controls autoplay style="position: absolute; left: 192px; top: 150px;"></video>
+    <img id="content" src="Content2.jpg" alt="TestNote" style="display: none;" />
 </body>
 </html>
