@@ -33,10 +33,12 @@ Ext.define('9Pad.controller.CarouselController', {
     },
 
     connection: undefined,
-    cardSwitchesToIgnore: [],
+	connectionOpen: false,
+//    cardSwitchesToIgnore: [],
     dragging: false,
     keepAliveTimer: undefined,
 	bubble: undefined,
+	lastUpdate: new Date().getTime(),
 
     init: function(){
         this.initWebSocket();
@@ -60,7 +62,7 @@ Ext.define('9Pad.controller.CarouselController', {
         console.log("Moving carousel to starting point:");
         console.log(carouselView);
         var startIndex = this.getCarouselView().column;
-        this.cardSwitchesToIgnore.push(startIndex);
+/*        this.cardSwitchesToIgnore.push(startIndex); */
         carouselView.setActiveItem(startIndex);
     },
 
@@ -95,20 +97,35 @@ Ext.define('9Pad.controller.CarouselController', {
 
     initWebSocket: function() {
         var self = this;
-        console.log("Opening WebSocket...");
         // if user is running mozilla then use its built-in WebSocket
         window.WebSocket = window.WebSocket || window.MozWebSocket;
+		self.connect();
+	},
+	
+	connect: function() {
+		var self = this;
+		console.log("Opening WebSocket to " + coordinationServerBaseIP + "...");
 
-        this.connection = new WebSocket('ws://' + coordinationServerBaseIP + ':1337');
-
+        this.connection = new WebSocket('ws://' + coordinationServerBaseIP + ':1337');		
+		
+		this.connection.onopen = function () {
+			self.connectionOpen = true;
+			console.log("Websocket open.");
+		};
+		
         this.connection.onerror = function (error) {
-            alert('Sorry, but there\'s some problem with your connection or the server is down.');
-        };
+			console.log("Connection failed. Retrying...");
+			
+			self.connectionOpen = false;
 
-        this.connection.onmessage = function(message) {
-            self.handleUpdateMessage.call(self, message);
+            //alert('Sorry, but there\'s some problem with your connection or the server is down.');
+			self.connection = undefined;
+			setTimeout(function() {self.connect(), 5000});
         };
-        console.log("WebSocket open.");
+		
+		this.connection.onmessage = function(message) {
+			self.handleUpdateMessage.call(self, message);
+		};
     },
 
     sendKeepAlive: function(connection) {
@@ -225,14 +242,22 @@ Ext.define('9Pad.controller.CarouselController', {
                 }
             };
 //        console.log("Sending content view broadcast: ", contentIndex, showBroadcast);
-        this.connection.send(JSON.stringify(showBroadcast));
+		if (this.connectionOpen != true) {
+			this.connect();
+		}
+		
+		if (this.connectionOpen === true) {
+			this.connection.send(JSON.stringify(showBroadcast));
+		}
     },
 
     onCardSwitch: function(self, value, oldValue) {
-        var index = self.getItems().indexOf(value) - 1;
-        if (this.cardSwitchesToIgnore.shift() !== index) {
-            this.sendCardSwitchBroadcast(index);
-        }
+		if (value != oldValue) {
+			var index = self.getItems().indexOf(value) - 1;
+//        if (this.cardSwitchesToIgnore.shift() !== index) {
+			this.sendCardSwitchBroadcast(index);
+		}
+//		}
     },
 
     sendCardSwitchBroadcast: function(newIndex) {
@@ -243,7 +268,12 @@ Ext.define('9Pad.controller.CarouselController', {
             "cardIndex": newIndex,
             "sourceColumn": column
         };
-        this.connection.send(JSON.stringify(moveBroadcast));
+		if (this.connectionOpen != true) {
+			this.connect();
+		}
+		if (this.connectionOpen === true) {
+			this.connection.send(JSON.stringify(moveBroadcast));
+		}
     },
 
     doLogout: function() {
@@ -254,7 +284,10 @@ Ext.define('9Pad.controller.CarouselController', {
         var json,
             cardIndex,
             sourceColumn,
-            column = this.getCarouselView().column;
+            column = this.getCarouselView().column,
+			now = new Date().getTime(),
+			timeDiff;
+			
         try {
             json = JSON.parse(message.data);
         } catch (e) {
@@ -265,12 +298,25 @@ Ext.define('9Pad.controller.CarouselController', {
         if (json.command === 'move') {
             cardIndex = json.cardIndex;
             sourceColumn = json.sourceColumn;
-            this.switchCard(cardIndex + (column - sourceColumn));
+			
+			// Prevent uncontrolled "skipping": Debounce move events
+			timeDiff = now - this.lastUpdate;
+			console.log("timeDiff=" + timeDiff);			
+			if (timeDiff > 500) {			
+				this.lastUpdate = now;
+				if (sourceColumn != column ) {
+					this.switchCard(cardIndex + (column - sourceColumn), sourceColumn);					
+				} else {
+					console.log("Ignored move cmd from self: " + sourceColumn);
+				}
+			} else {
+				console.log("Bounced move cmd : " + sourceColumn + " ( " + timeDiff + ")");
+			}
         }
     },
 
-    switchCard: function(newIndex) {
-        console.log("Switching card to new index: " + newIndex);
+    switchCard: function(newIndex, sourceColumn) {
+        console.log("Switching card to new index: " + newIndex + " (source: " + sourceColumn + ")");
         var carouselView = this.getCarouselView(),
             activeIndex = carouselView.getActiveIndex(),
             diff = newIndex - activeIndex,
@@ -282,10 +328,11 @@ Ext.define('9Pad.controller.CarouselController', {
                 } else {
                     jumpIndex = newIndex + 1;
                 }
-                this.cardSwitchesToIgnore.push(jumpIndex);
+//                this.cardSwitchesToIgnore.push(jumpIndex);
                 carouselView.setActiveItem(jumpIndex);
-            }
-            this.cardSwitchesToIgnore.push(newIndex);
+//            } else {
+//				this.cardSwitchesToIgnore.push(newIndex);
+			}
             if (diff > 0) {
                 carouselView.next();
             } else {

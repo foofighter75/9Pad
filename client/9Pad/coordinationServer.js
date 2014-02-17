@@ -5,4 +5,4 @@
  * Time: 16:38
  * To change this template use File | Settings | File Templates.
  */
-coordinationServerBaseIP = '192.168.1.100';
+coordinationServerBaseIP = 'localhost';
