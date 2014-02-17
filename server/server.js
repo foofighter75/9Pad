@@ -39,7 +39,7 @@ var wsServer = new webSocketServer({
 // This callback function is called every time someone
 // tries to connect to the WebSocket server
 wsServer.on('request', function(request) {
-    console.log((new Date()) + ' Connection from origin ' + request.origin + '.');
+    console.log((new Date()) + ' Connection from origin ' + request.remoteAddress + '.');
     var connection = request.accept(null, request.origin); 
     
 	// we need to know client index to remove them on 'close' event

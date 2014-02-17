@@ -2,3 +2,7 @@
 client/9Pad/.idea
 static_content/.idea/
 .idea/
+access_log
+agent_log
+error_log
+referer_log

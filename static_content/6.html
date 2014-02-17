@@ -2,8 +2,19 @@
 <html>
 <head>
     <title></title>
+    <script src="jquery-1.8.3.min.js"></script>
+    <script type="text/javascript">
+        <!--
+        $(document).ready(function() {
+            var img = $('#content');
+            img.load(function() {
+                img.fadeIn();
+            });
+        });
+        // -->
+    </script>
 </head>
 <body>
-<video src="master24.mp4" width="1024" height="768" controls autoplay></video>
+    <img id="content" src="C6.jpg" alt="TestNote" style="display: none;" />
 </body>
 </html>

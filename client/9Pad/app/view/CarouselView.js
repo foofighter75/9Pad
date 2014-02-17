@@ -13,8 +13,47 @@ Ext.define('9Pad.view.CarouselView', {
         items: [
             {
               xtype: 'image',
-              id: 'bubble',
-              src: 'resources/images/bubble.png',
+              id: 'bubble_blue',
+              src: 'resources/images/bubble_blue.png',
+                style: {
+                    width: '227px',
+                    height: '227px',
+                    visibility: 'hidden',
+                    display: 'none',
+                    position: 'absolute',
+                    'z-index':1
+                }
+            },
+            {
+              xtype: 'image',
+              id: 'bubble_red',
+              src: 'resources/images/bubble_red.png',
+                style: {
+                    width: '227px',
+                    height: '227px',
+                    visibility: 'hidden',
+                    display: 'none',
+                    position: 'absolute',
+                    'z-index':1
+                }
+            },
+            {
+              xtype: 'image',
+              id: 'bubble_green',
+              src: 'resources/images/bubble_green.png',
+                style: {
+                    width: '227px',
+                    height: '227px',
+                    visibility: 'hidden',
+                    display: 'none',
+                    position: 'absolute',
+                    'z-index':1
+                }
+            },
+			{
+              xtype: 'image',
+              id: 'bubble_yellow',
+              src: 'resources/images/bubble_yellow.png',
                 style: {
                     width: '227px',
                     height: '227px',
@@ -118,8 +157,97 @@ Ext.define('9Pad.view.CarouselView', {
                             'resources/images/Kacheln iPad-Matrix24.jpg'
                         ],
                         backgroundImage: 'myContentCard8'
+                    },
+                    {
+                        xtype : 'contentcard',
+                        contentImages: [
+                            'resources/images/Kacheln iPad-Matrix22.jpg',
+                            'resources/images/Kacheln iPad-Matrix23.jpg',
+                            'resources/images/Kacheln iPad-Matrix24.jpg'
+                        ],
+                        backgroundImage: 'myContentCard9'
+                    },
+                    {
+                        xtype : 'contentcard',
+                        contentImages: [
+                            'resources/images/Kacheln iPad-Matrix22.jpg',
+                            'resources/images/Kacheln iPad-Matrix23.jpg',
+                            'resources/images/Kacheln iPad-Matrix24.jpg'
+                        ],
+                        backgroundImage: 'myContentCard10'
+                    },
+                    {
+                        xtype : 'contentcard',
+                        contentImages: [
+                            'resources/images/Kacheln iPad-Matrix22.jpg',
+                            'resources/images/Kacheln iPad-Matrix23.jpg',
+                            'resources/images/Kacheln iPad-Matrix24.jpg'
+                        ],
+                        backgroundImage: 'myContentCard11'
+                    },
+                    {
+                        xtype : 'contentcard',
+                        contentImages: [
+                            'resources/images/Kacheln iPad-Matrix22.jpg',
+                            'resources/images/Kacheln iPad-Matrix23.jpg',
+                            'resources/images/Kacheln iPad-Matrix24.jpg'
+                        ],
+                        backgroundImage: 'myContentCard12'
+                    },
+                    {
+                        xtype : 'contentcard',
+                        contentImages: [
+                            'resources/images/Kacheln iPad-Matrix22.jpg',
+                            'resources/images/Kacheln iPad-Matrix23.jpg',
+                            'resources/images/Kacheln iPad-Matrix24.jpg'
+                        ],
+                        backgroundImage: 'myContentCard13'
+                    },
+                    {
+                        xtype : 'contentcard',
+                        contentImages: [
+                            'resources/images/Kacheln iPad-Matrix22.jpg',
+                            'resources/images/Kacheln iPad-Matrix23.jpg',
+                            'resources/images/Kacheln iPad-Matrix24.jpg'
+                        ],
+                        backgroundImage: 'myContentCard14'
+                    },
+                    {
+                        xtype : 'contentcard',
+                        contentImages: [
+                            'resources/images/Kacheln iPad-Matrix22.jpg',
+                            'resources/images/Kacheln iPad-Matrix23.jpg',
+                            'resources/images/Kacheln iPad-Matrix24.jpg'
+                        ],
+                        backgroundImage: 'myContentCard15'
+                    },
+                    {
+                        xtype : 'contentcard',
+                        contentImages: [
+                            'resources/images/Kacheln iPad-Matrix22.jpg',
+                            'resources/images/Kacheln iPad-Matrix23.jpg',
+                            'resources/images/Kacheln iPad-Matrix24.jpg'
+                        ],
+                        backgroundImage: 'myContentCard16'
+                    },
+                    {
+                        xtype : 'contentcard',
+                        contentImages: [
+                            'resources/images/Kacheln iPad-Matrix22.jpg',
+                            'resources/images/Kacheln iPad-Matrix23.jpg',
+                            'resources/images/Kacheln iPad-Matrix24.jpg'
+                        ],
+                        backgroundImage: 'myContentCard17'
+                    },
+                    {
+                        xtype : 'contentcard',
+                        contentImages: [
+                            'resources/images/Kacheln iPad-Matrix22.jpg',
+                            'resources/images/Kacheln iPad-Matrix23.jpg',
+                            'resources/images/Kacheln iPad-Matrix24.jpg'
+                        ],
+                        backgroundImage: 'myContentCard18'
                     }
-
                 ]
             },
             {

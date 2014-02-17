@@ -36,6 +36,7 @@ Ext.define('9Pad.controller.CarouselController', {
     cardSwitchesToIgnore: [],
     dragging: false,
     keepAliveTimer: undefined,
+	bubble: undefined,
 
     init: function(){
         this.initWebSocket();
@@ -131,7 +132,7 @@ Ext.define('9Pad.controller.CarouselController', {
             size = (opacity > 1) ? 227 : opacity * 227;
         // console.log("height="+windowHeight+" x="+x+" y="+y+" absDeltaY="+absDeltaY+" opacity="+opacity+" dropZoneBorder="+dropZoneBorder);
         if (this.dragging) {
-            $('#bubble').css({'top':y-size/2,'left':x-size/2,'width':size,'height':size,'opacity':opacity});
+			this.bubble.css({'top':y-size/2,'left':x-size/2,'width':size,'height':size,'opacity':opacity});
         }
     },
 
@@ -141,7 +142,8 @@ Ext.define('9Pad.controller.CarouselController', {
             me = this;
         console.log('Start dragging', arguments);
         me.dragging = true;
-        $('#bubble').css({'width':227,'height':227,'top':y-114,'left':x-114,'visibility':'visible','opacity':0});
+		me.initBubble();
+		me.bubble.css({'width':227,'height':227,'top':y-114,'left':x-114,'visibility':'visible','opacity':0});
     },
 
     onDrag: function(draggable, event, offsetX, offsetY) {
@@ -158,7 +160,7 @@ Ext.define('9Pad.controller.CarouselController', {
         if (absDeltaX < windowWidth / 3) {
             if (y < windowHeight / 5) {
                 me.onDropUpper(draggable, x, y);
-                $('#bubble').animate({
+				me.bubble.animate({
                     width: '0px',
                     height: '0px',
                     top: 0,
@@ -167,7 +169,7 @@ Ext.define('9Pad.controller.CarouselController', {
                 }, 500 );
             } else if (y > windowHeight * 4 / 5) {
                 me.onDropLower(draggable, x, y);
-                $('#bubble').animate({
+				me.bubble.animate({
                     width: '0px',
                     height: '0px',
                     top: windowHeight,
@@ -177,8 +179,7 @@ Ext.define('9Pad.controller.CarouselController', {
 
             }
             else {
-                // $('#bubble').css({'visibility':'hidden'});
-                $('#bubble').animate({
+				me.bubble.animate({
                     width: '0px',
                     height: '0px',
                     top: windowHeight / 2,
@@ -187,8 +188,7 @@ Ext.define('9Pad.controller.CarouselController', {
                 }, 800 );
             }
         } else {
-            // $('#bubble').css({'visibility':'hidden'});
-            $('#bubble').animate({
+			me.bubble.animate({
                 width: '0px',
                 height: '0px',
                 top: windowHeight / 2,
@@ -196,9 +196,8 @@ Ext.define('9Pad.controller.CarouselController', {
                 left: event.startX
             }, 800 );
         }
-
-
-        this.dragging = false;
+        me.dragging = false;
+		me.releaseBubble();
     },
 
     onDropUpper: function(draggable, x, y) {
@@ -296,5 +295,23 @@ Ext.define('9Pad.controller.CarouselController', {
         if (!this.keepAliveTimer) {
             this.keepAliveTimer = this.sendKeepAlive(this.connection);
         }
-    }
+    },
+	
+	initBubble: function () {
+		var me = this,
+		    rnd = Math.round(Math.random() * 4);
+		if (rnd == 0) {
+			me.bubble = $('#bubble_blue');
+		} else if (rnd == 1) {
+			me.bubble = $('#bubble_red');
+		} else if (rnd == 2) {
+			me.bubble = $('#bubble_green');
+		} else {
+			me.bubble = $('#bubble_yellow');
+		}		
+	},
+	
+	releaseBubble: function() {
+		this.bubble = undefined;
+	}
 });
