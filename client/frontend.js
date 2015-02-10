@@ -1,6 +1,8 @@
 $(function () {
     "use strict";
 
+	var COORDINATOR = "192.168.100.3:1337";
+	
     // for better performance - to avoid searching in DOM
     var content = $('#content');
     var input = $('#input');
@@ -46,7 +48,7 @@ $(function () {
 		
     // open connection
 	addMessage("Connecting to server...");
-    var connection = new WebSocket('ws://54.246.102.191:1337');
+    var connection = new WebSocket('ws://' + COORDINATOR);
 
     connection.onopen = function () {
 		// BEGIN EXAMPLE 

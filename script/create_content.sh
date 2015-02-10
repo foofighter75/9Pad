@@ -1,8 +1,15 @@
 #!/bin/bash
+# ============================================================================================
 # Bash Shell Script for creation of HTML content panes.
-# Naming scheme for content documents: C<INDEX>.(jpg|mp4), where INDEX starts from 0
+# Naming scheme for content documents: C<INDEX>.(jpg|mp4), where INDEX starts with 0
 # The script creates a wrapper html document for each content document found in static_content
-
+# using a template files for image and movie documents. 
+# 
+# Change those templates if you want to modify the content pages of the app!
+#
+# Prerequisites:
+# - Content documents are named and indexed as stated above in ../static_content
+# ============================================================================================
 declare -r IMAGE_TEMPLATE=image_template.html
 declare -r MOVIE_TEMPLATE=movie_template.html
 declare -r CONTENT_PATH=../static_content
