@@ -1,6 +1,11 @@
 
 client/9Pad/.idea
+client/9Pad/resources/images/page*.png
 static_content/.idea/
+static_content/*.html
+static_content/C*.jpg
+static_content/C*.mp4
+static_content/C*.html
 .idea/
 access_log
 agent_log
