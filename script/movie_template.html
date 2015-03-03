@@ -4,6 +4,10 @@
     <title></title>
 </head>
 <body>
-<video src="___SRC_FILE___" width="1024" height="768" controls autoplay></video>
+	<!-- Does not work with safari on IOS 8 due to a bug.
+	<video src="___SRC_FILE___" width="1024" height="768" controls="true" autoplay="false"></video>
+	-->
+	<!-- Workaround for IOS 8 problems with embedded video. Dimensions optimized for iPad air. -->
+	<iframe width="950" height="660" src="___SRC_FILE___" frameborder="0" allowfullscreen="true"></iframe>
 </body>
 </html>
